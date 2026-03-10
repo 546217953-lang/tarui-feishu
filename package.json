@@ -1,0 +1,27 @@
+{
+  "name": "feishu-project-client",
+  "productName": "飞书项目管理",
+  "private": true,
+  "version": "1.0.0",
+  "description": "飞书项目管理桌面客户端 - 支持 Windows 和 macOS",
+  "author": "前端 W",
+  "type": "module",
+  "scripts": {
+    "dev": "tauri dev",
+    "build": "tauri build",
+    "build:windows": "tauri build --target x86_64-pc-windows-msvc",
+    "build:macos": "tauri build --target x86_64-apple-darwin",
+    "build:macos-arm": "tauri build --target aarch64-apple-darwin",
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0"
+  },
+  "keywords": [
+    "feishu",
+    "project",
+    "tauri",
+    "desktop"
+  ],
+  "license": "MIT"
+}

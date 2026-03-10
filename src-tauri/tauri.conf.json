@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "飞书项目管理",
+  "version": "1.0.0",
+  "identifier": "com.feishu.project-client",
+  "build": {
+    "frontendDist": "../src"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "飞书项目管理",
+        "width": 1400,
+        "height": 900,
+        "minWidth": 1024,
+        "minHeight": 768,
+        "center": true,
+        "resizable": true,
+        "fullscreen": false,
+        "decorations": true,
+        "transparent": false
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.feishu.cn https://*.feishucn.com https://*.oceanengine.com; img-src 'self' data: https://*; style-src 'self' 'unsafe-inline' https://*; font-src 'self' data: https://*; connect-src 'self' https://* wss://*;"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "category": "Business",
+    "shortDescription": "飞书项目管理桌面客户端",
+    "longDescription": "飞书项目管理桌面客户端，提供便捷的项目管理体验"
+  }
+}

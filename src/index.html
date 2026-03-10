@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.feishu.cn https://*.feishucn.com https://*.oceanengine.com; img-src 'self' data: https://*; style-src 'self' 'unsafe-inline' https://*; font-src 'self' data: https://*; connect-src 'self' https://* wss://*;" />
+    <title>飞书项目管理</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #fff;
+      }
+      
+      #app {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      }
+      
+      .loading-logo {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 24px;
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+      
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.1); opacity: 0.8; }
+      }
+      
+      .loading-text {
+        font-size: 20px;
+        font-weight: 500;
+      }
+      
+      .loading-subtext {
+        font-size: 14px;
+        opacity: 0.8;
+        margin-top: 8px;
+      }
+      
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: none;
+      }
+      
+      iframe.loaded {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="loading" id="loading">
+        <svg class="loading-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="10" width="35" height="35" rx="8" fill="white" fill-opacity="0.9"/>
+          <rect x="55" y="10" width="35" height="35" rx="8" fill="white" fill-opacity="0.6"/>
+          <rect x="10" y="55" width="35" height="35" rx="8" fill="white" fill-opacity="0.6"/>
+          <rect x="55" y="55" width="35" height="35" rx="8" fill="white" fill-opacity="0.9"/>
+        </svg>
+        <div class="loading-text">飞书项目管理</div>
+        <div class="loading-subtext">正在加载...</div>
+      </div>
+      <iframe 
+        id="main-frame" 
+        src="https://project.feishu.cn/" 
+        allow="clipboard-read; clipboard-write; fullscreen"
+      ></iframe>
+    </div>
+    
+    <script>
+      const { appWindow } = window.__TAURI__.window;
+      
+      const loadingEl = document.getElementById('loading');
+      const iframe = document.getElementById('main-frame');
+      
+      // 页面加载完成后隐藏 loading
+      iframe.addEventListener('load', () => {
+        setTimeout(() => {
+          loadingEl.style.display = 'none';
+          iframe.classList.add('loaded');
+        }, 500);
+      });
+      
+      // 处理加载超时
+      setTimeout(() => {
+        if (loadingEl.style.display !== 'none') {
+          loadingEl.style.display = 'none';
+          iframe.classList.add('loaded');
+        }
+      }, 10000);
+      
+      // 双击全屏切换
+      let isFullscreen = false;
+      document.addEventListener('dblclick', async (e) => {
+        if (e.target.tagName === 'IFRAME') {
+          isFullscreen = !isFullscreen;
+          await appWindow.setFullscreen(isFullscreen);
+        }
+      });
+      
+      // 监听窗口大小变化
+      appWindow.onResized(() => {
+        console.log('Window resized');
+      });
+    </script>
+  </body>
+</html>
